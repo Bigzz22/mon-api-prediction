@@ -22,4 +22,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: mon-api-prediction  # ← ton nom EXACT
-          package: ./api
+          package: .
