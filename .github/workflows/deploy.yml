@@ -1,4 +1,4 @@
-name: Deploy FastAPI to Azure App Service
+name: Deploy FastAPI on Azure App Service
 
 on:
   push:
@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -20,12 +25,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: mon-api-prediction            # 💡 Nom exact de ton App Service Azure
-          publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
+          app-name: mon-api-prediction  # ⚠️ Nom exact dans Azure
+          slot-name: production
           package: .
