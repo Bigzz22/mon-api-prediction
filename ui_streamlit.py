@@ -23,7 +23,7 @@ if st.button("Lancer la prédiction"):
         # Envoyer la requête à ton API (en local ou sur Azure)
         try:
             response = requests.post(
-                "mon-api-prediction-hjcybjc4gad9cngv.westeurope-01.azurewebsites.net/predict",
+                "https://mon-api-prediction-hjcybjc4gad9cngv.westeurope-01.azurewebsites.net/predict",
                 json=input_data
             )
 
