@@ -44,12 +44,14 @@ def predict(data: InputData):
     if X_test.shape[1] != model.n_features_in_:
         return {"error": f"Le modèle attend {model.n_features_in_} features, mais en a reçu {X_test.shape[1]}"}
 
-    # Prédire la sortie vectorisée
-    prediction_vect = model.predict(X_test)
+    # Prédire les probabilités (au lieu de predict)
+    proba = model.predict_proba(X_test)  # shape: (1, n_tags)
 
-    prediction_labels = mlb.inverse_transform(prediction_vect)
+    # On récupère les indices des 5 tags les plus probables
+    top_indices = proba[0].argsort()[::-1][:5]
 
-    # Aplatir la liste pour l'UI
-    prediction_flat = list(prediction_labels[0]) if prediction_labels else []
+    # Convertir indices en tags
+    all_tags = mlb.classes_
+    top_tags = [all_tags[i] for i in top_indices]
 
-    return {"prediction": prediction_flat}
+    return {"prediction": top_tags}
