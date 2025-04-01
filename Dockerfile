@@ -17,6 +17,6 @@ COPY . .
 EXPOSE 8501
 
 # Run tests before starting the app
-RUN pytest tests/ || (echo "Tests failed" && exit 1)
+RUN pytest tests/
 
 CMD ["streamlit", "run", "ui_streamlit.py", "--server.port=8501", "--server.address=0.0.0.0"]
