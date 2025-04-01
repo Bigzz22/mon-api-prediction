@@ -11,6 +11,7 @@ COPY ui_streamlit.py .
 # Installer les dépendances
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install pytest
 
 COPY . .
 
