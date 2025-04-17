@@ -21,7 +21,7 @@ def preprocess_text(text):
 
 # Charger le modèle, le vectorizer et le MultiLabelBinarizer (si utilisé)
 model = joblib.load("prediction_tags.pkl")
-count_vectorizer = joblib.load("vectorizer_count.pkl")
+tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
 mlb = joblib.load("multi_label_binarizer.pkl")  # Assure-toi d'avoir sauvegardé ceci lors de l'entraînement
 
 # Définir l'API
@@ -38,7 +38,7 @@ def predict(data: InputData):
     texte_concatene = data.titre + " " + data.texte
     texte_pretraite = preprocess_text(texte_concatene)
 
-    X_test = count_vectorizer.transform([texte_pretraite])
+    X_test = tfidf_vectorizer.transform([texte_pretraite])
 
     # Vérifier la cohérence des dimensions
     if X_test.shape[1] != model.n_features_in_:
